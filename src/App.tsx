@@ -11,6 +11,10 @@ import {
 import { useAppSelector, useAppDispatch } from './redux/hooks'
 import './App.css';
 import { navigationSlice } from './redux/slices/navigationSlice';
+import Navigation from "../src/components/navigation/navigation"
+import Home from "../src/components/home/home"
+import About from "../src/components/about/about"
+import Contact from "../src/components/contact/contact"
 
 function App() {
 
@@ -25,21 +29,21 @@ function App() {
     <div className="App">
       <Router>
         <Redirect to={{ pathname: `/${currentPageURL}`, }} />
-        <Navigation handlePageChange={(number) => handlePageChange(number)} ></Navigation>  {/* See https://github.com/facebook/react/issues/18147  for need to use callback*/}
-        <ReactPageScroller pageOnChange={handlePageChange}
+        <Navigation /* handlePageChange={(number) => handlePageChange(number)} */ ></Navigation>  {/* See https://github.com/facebook/react/issues/18147  for need to use callback*/}
+        {/* <ReactPageScroller pageOnChange={handlePageChange}
 
 
-          customPageNumber={props.currentPage}>
+          customPageNumber={props.currentPage}> */}
 
-          <Home currentPage={props.currentPage} scrollDirection={props.scrollDirection}></Home>
-          <About currentPage={props.currentPage}>
+          <Home /* currentPage={props.currentPage} scrollDirection={props.scrollDirection} */></Home>
+          <About /* currentPage={props.currentPage} */>
 
           </About>
           <Contact></Contact>
           
           
 
-        </ReactPageScroller>
+       {/*  </ReactPageScroller> */}
 
         <div id='container' className="appcontainer">
 

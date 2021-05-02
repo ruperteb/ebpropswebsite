@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BannerLogo from "../../assets/EB_Logo-website.jpg"
+import SmallLogo from "../../assets/Small-Logo.jpg"
 import {
     BrowserRouter as Router,
     Switch,
@@ -12,6 +13,16 @@ import {
 } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+
+import {
+    motion,
+    useViewportScroll,
+    useSpring,
+    useTransform
+} from "framer-motion";
+
+import { useAppSelector, useAppDispatch } from '../../redux/hooks'
+import { navigationSlice } from '../../redux/slices/navigationSlice';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,18 +37,18 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "auto" */
     },
     Logo: {
-        visibility: 'visible',
+        /* visibility: 'visible',
         display: "flex",
         "align-items": "center",
         "justify-content": "space-between",
 
         position: "fixed",
-        "z-index": 1,
+        "z-index": 1, */
 
         "margin-left": "auto",
         "margin-right": "auto",
-        transition: "all 300ms ease-in",
-        transform: 'none',
+        /*  transition: "all 300ms ease-in",
+         transform: 'none', */
         height: "200px"
     },
 
@@ -61,47 +72,11 @@ const useStyles = makeStyles((theme) => ({
         margin: 0
     },
     LogoDiv: {
-        height: "200px",
-        width: "100%",
-        justifyContent: "center",
-        display: "flex",
-        padding: 0,
         "background-color": "#1f304a",
-        position: "fixed",
-        "z-index": 1,
-
-        "margin-left": "auto",
-        "margin-right": "auto",
-        transition: "all 300ms ease-in",
-        transform: 'none',
-
     },
-    LogoDivHidden: {
-        visibility: 'hidden',
-        height: "200px",
-        width: "100%",
-        justifyContent: "center",
-        display: "flex",
-        padding: 0,
-        "background-color": "#1f304a",
-        position: "fixed",
-        "z-index": 1,
-
-        "margin-left": "auto",
-        "margin-right": "auto",
-        transition: "all 300ms ease-out",
-        transform: 'translate(0, -100%)',
-
-    },
-    NavBar: {
-        height: "40px",
+    NavDiv: {
         "background-color": "#ca6",
-        position: "fixed",
-        "z-index": 2,
-        marginTop: "200px",
         width: "100%",
-        transition: "all 300ms ease-in",
-        transform: 'none',
     },
     NavBarTranslated: {
         height: "40px",
@@ -114,37 +89,21 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translate(0, -200px)',
     },
     SmallLogo: {
-        height: "40px",
-        /* width: "40px", */
-        justifyContent: "center",
+        height: "53px",
         display: "flex",
         padding: 0,
         "background-color": "#1f304a",
-        position: "fixed",
-        "z-index": 1,
-
-        "margin-left": "auto",
-        "margin-right": "auto",
-        transition: "all 300ms ease-in",
-        /* transform: 'translate(-100%, 0)', */
-
     },
-    SmallLogoHidden: {
-        visibility: 'hidden',
-        height: "40px",
-        width: "40px",
-        justifyContent: "center",
+    NavLinkDiv: {
         display: "flex",
-        padding: 0,
-        "background-color": "#1f304a",
-        position: "fixed",
-        "z-index": 1,
-
-        "margin-left": "auto",
-        "margin-right": "auto",
-        transition: "all 300ms ease-out",
-        transform: 'translate(-100%, 0)',
-
+        flexDirection: "column",
+        height: 40,
+        width: "fit-content",
+        paddingBottom: "5px",
+        paddingLeft: "5px",
+        paddingRight: "5px",
+        marginRight: "auto",
+        marginLeft: "auto",
     },
     NavLink: {
         "font-family": "Abel, sans-serif",
@@ -152,37 +111,151 @@ const useStyles = makeStyles((theme) => ({
         "font-weight": 100,
         "text-transform": "uppercase",
         "font-size": "14px",
-        "margin-right": "35px",
         "letter-spacing": "2px",
         color: "#404040",
-        "line-height": "40px",
+        "line-height": "25px",
         '&:hover': { color: "#ffffff", },
-        paddingBottom: "5px",
-        paddingLeft: "5px",
-        paddingRight: "5px",
-
-
+        marginTop: "auto"
     },
-    NavLinkActive: {
-        "border-radius": "0px",
-        "border-bottom": "2px solid #e2d8d8d5",
-        color: "#ffffff",
+    NavLinkHover: {
+        color: "#ffffff"
+    },
+    NavLinkUnderline: {
+        height: 2,
+        marginBottom: "auto"
     }
-
 
 }));
 
 interface Props {
-    exampleProp: string | undefined,
+    /* exampleProp: string | undefined, */
 }
 
-export const Navigation: React.FC<Props> = ({ exampleProp, }) => {
+export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
+
+    const currentPage = useAppSelector((state) => state.navigation.currentPage)
+    const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
+    const scrollY = useAppSelector((state) => state.navigation.scrollY)
+    console.log(scrollY)
+
+    const dispatch = useAppDispatch()
 
     const classes = useStyles();
 
+    const { scrollY: scrollYFramer } = useViewportScroll();
+
+    /* const [scroll, setScroll] = React.useState(0); */
+
+    const [isTop, setIsTop] = React.useState(false);
+
+
+    React.useEffect(() => {
+
+        scrollYFramer.onChange((latestY) =>
+            dispatch(navigationSlice.actions.setScrollY(latestY))
+        )
+
+        if (scrollY <= 50) {
+            setIsTop(true)
+        } else setIsTop(false)
+
+    }, [scrollYFramer, scrollY])
+
+
+    const getHeaderTop = () => {
+        if (isTop === true) {
+            return 0
+        } else return -200
+
+    }
+
+    const getHeaderLeft = () => {
+        if (isTop === true) {
+            return -210
+        } else return 0
+
+    }
+
+    const [navLinkToggle1, setNavLinkToggle1] = React.useState(false)
+    const [navLinkToggle2, setNavLinkToggle2] = React.useState(false)
+    const [navLinkToggle3, setNavLinkToggle3] = React.useState(false)
+
+    const [navLinkHover1, setNavLinkHover1] = React.useState(false)
+    const [navLinkHover2, setNavLinkHover2] = React.useState(false)
+    const [navLinkHover3, setNavLinkHover3] = React.useState(false)
+
+    React.useEffect(() => {
+        if (currentPage === 0) {
+            setNavLinkToggle1(true)
+            setNavLinkToggle2(false)
+            setNavLinkToggle3(false)
+        }
+        if (currentPage === 1) {
+            setNavLinkToggle1(false)
+            setNavLinkToggle2(true)
+            setNavLinkToggle3(false)
+        }
+        if (currentPage === 2) {
+            setNavLinkToggle1(false)
+            setNavLinkToggle2(false)
+            setNavLinkToggle3(true)
+        }
+    }, [currentPage])
+
+
+
+
+
     return (
 
-        <Container maxWidth="xl" className={classes.NavContainer} /* className={hideOnScroll ? classes.visibleNavBar : classes.hiddenNavBar} */>
+        <motion.div layout style={{ top: getHeaderTop(), left: 0, position: "fixed", zIndex: 1, width: "100%" }} >
+            <div className={classes.LogoDiv}>
+                <img className={classes.Logo} src={BannerLogo} alt="EllisBrownPropertiesLogo"></img>
+
+            </div>
+
+            <div className={classes.NavDiv}>
+                <Grid container spacing={1}>
+                    <Grid item xs={3}>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Grid container spacing={1}>
+                            <Grid item xs={4}>
+                                <div onMouseEnter={() => setNavLinkHover1(true)} onMouseLeave={() => setNavLinkHover1(false)} className={classes.NavLinkDiv}>
+                                    <Link className={currentPage === 0 ? `${classes.NavLink} ${classes.NavLinkHover} ` : classes.NavLink} to={`/#home`} onClick={() => dispatch(navigationSlice.actions.setCurrentPage(0))}>Home </Link>
+                                    <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle1 === true || navLinkHover1 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
+                                </div>
+
+
+                            </Grid>
+                            <Grid item xs={4}>
+                                <div onMouseEnter={() => setNavLinkHover2(true)} onMouseLeave={() => setNavLinkHover2(false)} className={classes.NavLinkDiv}>
+                                    <Link className={currentPage === 1 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#about`} onClick={() => dispatch(navigationSlice.actions.setCurrentPage(1))}>About </Link>
+                                    <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle2 === true || navLinkHover2 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
+                                </div>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <div onMouseEnter={() => setNavLinkHover3(true)} onMouseLeave={() => setNavLinkHover3(false)} className={classes.NavLinkDiv}>
+                                    <Link className={currentPage === 2 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#contact`} onClick={() => dispatch(navigationSlice.actions.setCurrentPage(2))}>Contact </Link>
+                                    <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle3 === true || navLinkHover3 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
+                                </div>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={3}></Grid>
+                </Grid>
+            </div>
+
+            <motion.div layout style={{ top: 200, left: getHeaderLeft(), position: "absolute", zIndex: 1 }} >
+
+                <img className={classes.SmallLogo} src={BannerLogo} alt="EllisBrownPropertiesLogo2"></img>
+
+            </motion.div>
+
+        </motion.div>
+
+        /* <Container maxWidth="xl" className={classes.NavContainer} >
             <div className={props.showLogoDiv ? classes.LogoDiv : classes.LogoDivHidden}>
                 <img className={classes.Logo} src={BannerLogo} alt="EllisBrownPropertiesLogo"></img>
             </div>
@@ -194,8 +267,8 @@ export const Navigation: React.FC<Props> = ({ exampleProp, }) => {
                     <Grid item xs={6}>
                         <Grid container spacing={1}>
                             <Grid item xs={4}>
-                                <Link className={props.currentPage === 0 ? `${classes.NavLink} ${classes.NavLinkActive}` : classes.NavLink} to={`/#home`} onClick={() => props.handlePageChange(0)}>Home </Link>   {/* See https://github.com/facebook/react/issues/18147  for need to use callback*/}
-                                {/*  <button onClick={setCurrentPageDispatch(0)}></button> */}
+                                <Link className={props.currentPage === 0 ? `${classes.NavLink} ${classes.NavLinkActive}` : classes.NavLink} to={`/#home`} onClick={() => props.handlePageChange(0)}>Home </Link> 
+                                
                             </Grid>
                             <Grid item xs={4}>
                                 <Link className={props.currentPage === 1 ? `${classes.NavLink} ${classes.NavLinkActive}` : classes.NavLink} to={`/#about`} onClick={() => props.handlePageChange(1)}>About </Link>
@@ -213,7 +286,7 @@ export const Navigation: React.FC<Props> = ({ exampleProp, }) => {
             </div>
 
 
-        </Container>
+        </Container> */
     );
 };
 
