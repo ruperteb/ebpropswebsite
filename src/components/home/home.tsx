@@ -100,6 +100,18 @@ export const Home: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const dispatch = useAppDispatch()
 
+    const homeRef = React.createRef<HTMLDivElement>()
+
+    React.useEffect(() => {
+
+        if(homeRef.current)
+
+        dispatch(navigationSlice.actions.setHomeHeight(homeRef.current?.getBoundingClientRect().height))
+
+    }, [])
+
+    
+
     const classes = useStyles();
 
     const { scrollY} = useViewportScroll();
@@ -114,7 +126,7 @@ export const Home: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
 
     return (
-        <Container maxWidth='lg' className={classes.container} id={`#home`}>
+        <Container ref={homeRef} maxWidth='lg' className={classes.container} id={`#home`}>
 
             <motion.div style={{ y: y1, position:"absolute", top: 0, left: 0, width: "100vw"}} >
                 <img className={classes.Image} src={ConventionTower} alt="ConventionTower"></img>

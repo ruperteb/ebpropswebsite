@@ -37,19 +37,32 @@ const useStyles = makeStyles((theme) => ({
     outerDiv: {
         width: "100vw",
         backgroundColor: "#1f304a",
-        paddingTop: 218
+        paddingTop: 236
     },
     container: {
         padding: 0,
         width: '100vw',
         backgroundColor: "#1f304a"
     },
+    verticalLineContainer: {
+        "&:first-child": {
+            "z-index": 1
+        }
+    },
     verticalLine: {
         height: "3.5em",
         width: 3,
         backgroundColor: "white",
-        marginTop: "0.67em",
-        marginBottom: "0.67em",
+        marginTop: "1em",
+        marginBottom: "1em",
+    },
+    verticaLineBackground: {
+        width: 2,
+        backgroundColor: "#ccaa66",
+        marginTop: "1em",
+        marginBottom: "1em",
+        transform: "translateX(-2.5px)",
+        zIndex: -1
     },
     stickyLine: {
         position: "fixed",
@@ -61,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     },
     stickyLeftPanel: {
         position: "fixed",
-        top: 136,
+        top: 218,
         maxWidth: "calc((1288px*16.666667/100) - 8px)",
         flexBasis: "16.666667%",
     },
@@ -90,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 36,
         textAlign: "left",
         lineHeight: 2,
-        textShadow: "6px 2px 5px #000000",
+        textShadow: "2px 2px 5px #000000",
     },
     icon: {
         marginTop: "auto",
@@ -118,20 +131,34 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
     const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
     const scrollY = useAppSelector((state) => state.navigation.scrollY)
 
+    const initialBottomDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight)
+
+
     const dispatch = useAppDispatch()
+
+    const aboutRef = React.createRef<HTMLDivElement>()
+
+    React.useEffect(() => {
+
+        if (aboutRef.current)
+
+            dispatch(navigationSlice.actions.setAboutHeight(aboutRef.current?.getBoundingClientRect().height))
+
+    }, [])
+
 
     const classes = useStyles();
 
-    const ref = React.createRef<HTMLDivElement>()
+    const bottomRef = React.createRef<HTMLDivElement>()
+
+
+    const [bottomDistance, setBottomDistance] = React.useState<number>()
+
 
     React.useEffect(() => {
-        if (ref) {
-            if (ref.current) {
-                /*  console.log(ref.current.getBoundingClientRect()) */
-            }
+        setBottomDistance(bottomRef.current?.getBoundingClientRect().y)
+    }, [bottomRef])
 
-        }
-    }, [ref])
 
     const [historyRef, historyInView, historyEntry] = useInView({
         /* Optional options */
@@ -140,7 +167,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const [agentsSeanRef, agentsSeanInView, agentsSeanEntry] = useInView({
         /* Optional options */
-        threshold: 0,
+        threshold: 0.2,
     });
 
     const [agentsMarkRef, agentsMarkInView, agentsMarkEntry] = useInView({
@@ -150,93 +177,117 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const [servicesRef, servicesInView, servicesEntry] = useInView({
         /* Optional options */
-        threshold: 0,
+        threshold: 0.2,
     });
 
-    const variants = {
+    const rightPanelItemVariants = {
         hidden: { opacity: 0, y: "20%" },
         visible: { opacity: 1, y: "0%" },
     }
 
+    const servicesItemVariants = {
+        hidden: { opacity: 0, y: "20%", x: -50 },
+        visible: { opacity: 1, y: "0%", x: 0 },
+    }
+
     const lineVariants = {
-        history: {  y: "0px" },
+        history: { y: "0px" },
         agents: { y: "85.547px" },
-        sevices: {y: "171.094px" }
+        sevices: { y: "171.094px" }
+    }
+
+    const leftPanelTextVariants = {
+        selected: { color: "#ffffff"  },
+        unselected: { color: "#ccaa66" },
+        
     }
 
     const [recentInView, setRecentInView] = React.useState("history")
 
-    console.log(recentInView)
-
-    React.useEffect (()=> {
-        if(historyInView === true) {
+    React.useEffect(() => {
+        if (historyInView === true) {
             setRecentInView("history")
         }
 
-        if(agentsSeanInView === true || agentsMarkInView === true ) {
+        if (agentsSeanInView === true || agentsMarkInView === true) {
             setRecentInView("agents")
         }
 
-        if(servicesInView === true) {
+        if (servicesInView === true) {
             setRecentInView("services")
         }
 
-    },[historyInView, agentsSeanInView, agentsMarkInView, servicesInView  ])
+    }, [historyInView, agentsSeanInView, agentsMarkInView, servicesInView])
 
     const getLineVariant = () => {
-        switch(recentInView) {
+        switch (recentInView) {
             case "history":
-              return lineVariants.history
-              case "agents":
+                return lineVariants.history
+            case "agents":
                 return lineVariants.agents
-                case "services":
+            case "services":
                 return lineVariants.sevices
             default:
                 return lineVariants.history
-          }
+        }
     }
 
-   console.log(getLineVariant())
+    console.log(scrollY)
+
+    const getLeftPanelStyles: any = () => {
+        if (bottomDistance) {
+            if (bottomDistance <= 735) {
+                return { position: "absolute", top: initialBottomDistance! - 735, width: "calc((1288px*16.666667/100) - 8px)", flexBasis: "16.666667%", }
+            } else {
+                if (scrollY >= window.innerHeight) {
+                    return { position: "fixed", top: 236, width: "calc((1288px*16.666667/100) - 8px)", flexBasis: "16.666667%", }
+                } else return { display: "flex", width: "100%", marginBottom: "auto" }
+            }
+        } else return { display: "flex", width: "100%", marginBottom: "auto" }
+
+
+    }
 
 
     return (
-        <div className={classes.outerDiv}>
+        <div ref={aboutRef} className={classes.outerDiv}>
             <Container maxWidth='lg' className={classes.container} id="#about">
                 <Grid container spacing={1} style={{ marginLeft: "auto", marginRight: "auto" }}>
-                    <Grid container item xs={2}>
-                        <Grid ref={ref} container item xs={scrollY > 900 ? 2 : 12} className={scrollY > 900 ? classes.stickyLeftPanel : ""}>
-                            <Grid item xs={3} /* className={scrollY > 700 ? classes.stickyLine : ""} */>
-                                <motion.div className={classes.verticalLine}
-                                animate={getLineVariant()}
-                                /* variants={lineVariants} */
-                                transition={{ duration: 1 }}>
-                                </motion.div>
+                    <Grid container item xs={2} >
+                        <motion.div style={getLeftPanelStyles()} layout transition={{ ease: "easeOut", duration: 0.5 }}>
+                            <Grid container item >
+                                <Grid item container xs={3} className={classes.verticalLineContainer}>
+                                    <motion.div className={classes.verticalLine}
+                                        animate={getLineVariant()}
+                                        /* variants={lineVariants} */
+                                        transition={{ duration: 1 }}>
+                                    </motion.div>
+                                    <div className={classes.verticaLineBackground}></div>
+                                </Grid>
+                                <Grid item xs={9}>
+                                    <div className={classes.leftPanel}>
+                                        <motion.h1 animate={recentInView === "history" ? "selected" : "unselected"} variants={leftPanelTextVariants} transition={{ duration: 0.6 }}>History</motion.h1>
+                                        <motion.h1 animate={recentInView === "agents" ? "selected" : "unselected"} variants={leftPanelTextVariants} transition={{ duration: 0.6 }}>Agents</motion.h1>
+                                        <motion.h1 animate={recentInView === "services" ? "selected" : "unselected"} variants={leftPanelTextVariants} transition={{ duration: 0.6 }}>Services</motion.h1>
+                                    </div>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={9} /* className={scrollY > 700 ? classes.stickyLeftPanel : ""} */>
-                                <div className={classes.leftPanel}>
-                                    <h1 className={classes.leftPanelText}>History</h1>
-                                    <h1 className={classes.leftPanelText}>Agents</h1>
-                                    <h1 className={classes.leftPanelText}>Services</h1>
-                                </div>
-                            </Grid>
-                        </Grid>
+                        </motion.div>
 
                     </Grid>
                     <Grid item xs={10}>
                         <div className={classes.rightPanel}>
                             <motion.div ref={historyRef} className={classes.rightPanelItem}
                                 animate={historyInView ? "visible" : "hidden"}
-                                variants={variants}
+                                variants={rightPanelItemVariants}
                                 transition={{ duration: 1 }}>
                                 <p className={classes.textMain}>Ellis Brown Properties was formed in 1997 by brothers Mark and Sean Ellis Brown to service the commercial and industrial markets of the greater Cape Town Metropolitan and Western Cape Peninsula areas. The company is well established and has a reputation for providing thorough and professional advice. Remaining small and focused, Ellis Brown Properties aims to provide its clients with a personal, confidential, hands-on service. Its key brokers, Mark and Sean Ellis Brown, are both experienced professionals with a sound knowledge of the Cape Town and broader South African property market. The company has a comprehensive data base and its brokers have a thorough understanding of all sectors of the market.</p>
                             </motion.div>
                             <motion.div ref={agentsSeanRef} className={classes.rightPanelItem}
                                 animate={agentsSeanInView ? "visible" : "hidden"}
-                                variants={variants}
+                                variants={rightPanelItemVariants}
                                 transition={{ duration: 1 }}>
-                                <Grid container direction="column">
-                                    <Grid xs={1} container item>
-                                    </Grid>
+                                <Grid container direction="row">
                                     <Grid xs={10} container item>
                                         <Grid xs={4} container item>
                                             <div style={{ margin: "auto" }}>
@@ -252,17 +303,15 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                         </Grid>
 
                                     </Grid>
-                                    <Grid xs={1} container item>
+                                    <Grid xs={2} container item>
                                     </Grid>
                                 </Grid>
                             </motion.div>
                             <motion.div ref={agentsMarkRef} className={classes.rightPanelItem}
                                 animate={agentsMarkInView ? "visible" : "hidden"}
-                                variants={variants}
+                                variants={rightPanelItemVariants}
                                 transition={{ duration: 1 }}>
-                                <Grid container direction="column">
-                                    <Grid xs={1} container item>
-                                    </Grid>
+                                <Grid container direction="row">
                                     <Grid xs={10} container item>
                                         <Grid xs={4} container item>
                                             <div style={{ margin: "auto" }}>
@@ -278,8 +327,42 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                         </Grid>
 
                                     </Grid>
-                                    <Grid xs={1} container item>
+                                    <Grid xs={2} container item>
                                     </Grid>
+                                </Grid>
+                            </motion.div>
+                            <motion.div ref={servicesRef} className={classes.rightPanelItem}
+                                animate={servicesInView ? "visible" : "hidden"}
+                                variants={rightPanelItemVariants}
+                                transition={{ duration: 1 }}>
+                                <Grid container direction="row">
+                                    <Grid xs={3} container item>
+                                    </Grid>
+                                    <Grid xs={6} container item>
+                                        <p className={classes.textName}>Our expertise covers:</p>
+                                    </Grid>
+                                    <Grid xs={3} container item>
+                                    </Grid>
+                                    <Grid xs={6} container item>
+                                        <Grid xs={12} direction="column" item>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.5 }}>• Commercial leasing and sales</motion.p>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.7 }}>• Industrial leasing and sales</motion.p>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.9 }}>• Investment sales</motion.p>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 1.1 }}>• Residential sales and letting</motion.p>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 1.3 }}>• Ad hoc research reports and market studies</motion.p>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid xs={5} container item>
+                                        <Grid xs={12} direction="column" item>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.6 }}>• Facilitating new developments</motion.p>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.8 }}>• Site selection and evaluation</motion.p>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 1 }}>• Sale & lease-back negotiations</motion.p>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 1.2 }}>• Property development marketing</motion.p>
+                                            <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 1.4 }}>• Sourcing of properties</motion.p>
+                                        </Grid>
+                                    </Grid>
+                                    {/* <Grid xs={1} container item>
+                                    </Grid> */}
                                 </Grid>
                             </motion.div>
                         </div>
@@ -287,6 +370,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
                     </Grid>
                 </Grid>
             </Container>
+            <div ref={bottomRef}></div>
         </div>
 
 

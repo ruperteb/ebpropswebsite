@@ -7,6 +7,11 @@ export interface NavigationState {
     currentPage: number;
     currentPageURL: string
     scrollY: number;
+    navigationHeight: number;
+    homeHeight: number;
+    aboutHeight: number;
+    significantHeight: number;
+    contactHeight: number;
    
 }
 
@@ -14,6 +19,11 @@ const initialState: NavigationState = {
     currentPage: 0,
     currentPageURL: "#home",
     scrollY: 0,
+    navigationHeight: 0,
+    homeHeight: 0,
+    aboutHeight: 0,
+    significantHeight: 0,
+    contactHeight: 0,
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -38,6 +48,15 @@ export const navigationSlice = createSlice({
             state.scrollY = action.payload;
             /* console.log(current(state)) */
         },
+        setNavigationHeight: (state, action: PayloadAction<number>) => {
+            state.navigationHeight = action.payload; 
+        },
+        setHomeHeight: (state, action: PayloadAction<number>) => {
+            state.homeHeight = action.payload; 
+        },
+        setAboutHeight: (state, action: PayloadAction<number>) => {
+            state.aboutHeight = action.payload; 
+        },
         
     },
     // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -54,7 +73,7 @@ export const navigationSlice = createSlice({
     }, */
 });
 
-export const { setCurrentPage, setCurrentPageURL, setScrollY } = navigationSlice.actions;
+export const { setCurrentPage, setCurrentPageURL, setScrollY, setNavigationHeight, setHomeHeight, setAboutHeight  } = navigationSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -64,6 +83,14 @@ export const selectCurrentPage = (state: RootState) => state.navigation.currentP
 export const selectCurrentPageURL = (state: RootState) => state.navigation.currentPageURL;
 
 export const selectScrollY = (state: RootState) => state.navigation.scrollY;
+
+export const selectNavigationHeight = (state: RootState) => state.navigation.navigationHeight;
+
+export const selectHomeHeight = (state: RootState) => state.navigation.homeHeight;
+
+export const selectAboutHeight = (state: RootState) => state.navigation.aboutHeight;
+
+export const selectAboutBottom = (state: RootState) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight ;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

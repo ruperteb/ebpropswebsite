@@ -147,6 +147,18 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const [isTop, setIsTop] = React.useState(false);
 
+    const navigationRef = React.createRef<HTMLDivElement>()
+
+    React.useEffect(() => {
+
+        if(navigationRef.current)
+
+        dispatch(navigationSlice.actions.setNavigationHeight(navigationRef.current?.getBoundingClientRect().height))
+
+    }, [])
+
+   
+
 
     React.useEffect(() => {
 
@@ -207,7 +219,7 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     return (
 
-        <motion.div layout style={{ top: getHeaderTop(), left: 0, position: "fixed", zIndex: 1, width: "100%" }} >
+        <motion.div ref={navigationRef} layout style={{ top: getHeaderTop(), left: 0, position: "fixed", zIndex: 1, width: "100%" }} >
             <div className={classes.LogoDiv}>
                 <img className={classes.Logo} src={BannerLogo} alt="EllisBrownPropertiesLogo"></img>
 
