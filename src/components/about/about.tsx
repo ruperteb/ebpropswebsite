@@ -159,6 +159,21 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
         setBottomDistance(bottomRef.current?.getBoundingClientRect().y)
     }, [bottomRef])
 
+    const [aboutComponentRef, aboutComponentInView, aboutComponentEntry] = useInView({
+        /* Optional options */
+        threshold: 0.2,
+    });
+
+    React.useEffect(() => {
+
+        if (aboutComponentInView) {
+
+            dispatch(navigationSlice.actions.setCurrentPage(1))
+            dispatch(navigationSlice.actions.setCurrentPageURL("#about"))
+
+        }
+
+    }, [aboutComponentInView])
 
     const [historyRef, historyInView, historyEntry] = useInView({
         /* Optional options */
@@ -167,7 +182,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const [agentsSeanRef, agentsSeanInView, agentsSeanEntry] = useInView({
         /* Optional options */
-        threshold: 0.2,
+        threshold: 0.4,
     });
 
     const [agentsMarkRef, agentsMarkInView, agentsMarkEntry] = useInView({
@@ -177,7 +192,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const [servicesRef, servicesInView, servicesEntry] = useInView({
         /* Optional options */
-        threshold: 0.2,
+        threshold: 0.4,
     });
 
     const rightPanelItemVariants = {
@@ -251,7 +266,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     return (
         <div ref={aboutRef} className={classes.outerDiv}>
-            <Container maxWidth='lg' className={classes.container} id="#about">
+            <Container ref={aboutComponentRef} maxWidth='lg' className={classes.container} id="#about">
                 <Grid container spacing={1} style={{ marginLeft: "auto", marginRight: "auto" }}>
                     <Grid container item xs={2} >
                         <motion.div style={getLeftPanelStyles()} layout transition={{ ease: "easeOut", duration: 0.5 }}>

@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translate(0, -200px)',
     },
     SmallLogo: {
-        height: "53px",
+        height: "70px",
         display: "flex",
         padding: 0,
         "background-color": "#1f304a",
@@ -97,13 +97,14 @@ const useStyles = makeStyles((theme) => ({
     NavLinkDiv: {
         display: "flex",
         flexDirection: "column",
-        height: 40,
+        /* height: 40, */
         width: "fit-content",
         paddingBottom: "5px",
+        paddingTop: "5px",
         paddingLeft: "5px",
         paddingRight: "5px",
-        marginRight: "auto",
-        marginLeft: "auto",
+        margin: "auto",
+        lineHeight: 20,
     },
     NavLink: {
         "font-family": "Abel, sans-serif",
@@ -136,6 +137,8 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
     const currentPage = useAppSelector((state) => state.navigation.currentPage)
     const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
     const scrollY = useAppSelector((state) => state.navigation.scrollY)
+
+    const aboutScrollDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight)
 
     const dispatch = useAppDispatch()
 
@@ -182,7 +185,7 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const getHeaderLeft = () => {
         if (isTop === true) {
-            return -210
+            return -280
         } else return 0
 
     }
@@ -190,30 +193,57 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
     const [navLinkToggle1, setNavLinkToggle1] = React.useState(false)
     const [navLinkToggle2, setNavLinkToggle2] = React.useState(false)
     const [navLinkToggle3, setNavLinkToggle3] = React.useState(false)
+    const [navLinkToggle4, setNavLinkToggle4] = React.useState(false)
 
     const [navLinkHover1, setNavLinkHover1] = React.useState(false)
     const [navLinkHover2, setNavLinkHover2] = React.useState(false)
     const [navLinkHover3, setNavLinkHover3] = React.useState(false)
+    const [navLinkHover4, setNavLinkHover4] = React.useState(false)
 
     React.useEffect(() => {
         if (currentPage === 0) {
             setNavLinkToggle1(true)
             setNavLinkToggle2(false)
             setNavLinkToggle3(false)
+            setNavLinkToggle4(false)
         }
         if (currentPage === 1) {
             setNavLinkToggle1(false)
             setNavLinkToggle2(true)
             setNavLinkToggle3(false)
+            setNavLinkToggle4(false)
         }
         if (currentPage === 2) {
             setNavLinkToggle1(false)
             setNavLinkToggle2(false)
             setNavLinkToggle3(true)
+            setNavLinkToggle4(false)
+        }
+        if (currentPage === 3) {
+            setNavLinkToggle1(false)
+            setNavLinkToggle2(false)
+            setNavLinkToggle3(false)
+            setNavLinkToggle4(true)
         }
     }, [currentPage])
 
+const navLinkClick = (page:number) => {
 
+    dispatch(navigationSlice.actions.setCurrentPage(page))
+
+    switch(page) {
+        case 0:
+            window.scrollTo({ behavior: 'smooth', top: 0 })
+          break;
+        case 1:
+            window.scrollTo({ behavior: 'smooth', top: aboutScrollDistance -200 })
+          break;
+        default:
+            window.scrollTo({ behavior: 'smooth', top: 0 })
+      }
+
+
+}
 
 
 
@@ -231,26 +261,31 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
                     </Grid>
                     <Grid item xs={6}>
                         <Grid container spacing={1}>
-                            <Grid item xs={4}>
+                            <Grid item container xs={3}>
                                 <div onMouseEnter={() => setNavLinkHover1(true)} onMouseLeave={() => setNavLinkHover1(false)} className={classes.NavLinkDiv}>
-                                    <Link className={currentPage === 0 ? `${classes.NavLink} ${classes.NavLinkHover} ` : classes.NavLink} to={`/#home`} onClick={() => dispatch(navigationSlice.actions.setCurrentPage(0))}>Home </Link>
+                                    <Link className={currentPage === 0 ? `${classes.NavLink} ${classes.NavLinkHover} ` : classes.NavLink} to={`/#home`} onClick={() => navLinkClick(0)}>Home </Link>
                                     <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle1 === true || navLinkHover1 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
                                 </div>
 
 
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item container xs={3}>
                                 <div onMouseEnter={() => setNavLinkHover2(true)} onMouseLeave={() => setNavLinkHover2(false)} className={classes.NavLinkDiv}>
-                                    <Link className={currentPage === 1 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#about`} onClick={() => dispatch(navigationSlice.actions.setCurrentPage(1))}>About </Link>
+                                    <Link className={currentPage === 1 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#about`} onClick={() => navLinkClick(1)}>About </Link>
                                     <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle2 === true || navLinkHover2 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
                                 </div>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item container xs={3}>
                                 <div onMouseEnter={() => setNavLinkHover3(true)} onMouseLeave={() => setNavLinkHover3(false)} className={classes.NavLinkDiv}>
-                                    <Link className={currentPage === 2 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#contact`} onClick={() => dispatch(navigationSlice.actions.setCurrentPage(2))}>Contact </Link>
+                                    <Link className={currentPage === 2 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#significant_transactions`} onClick={() => navLinkClick(2)}><div><p style={{margin: 0, fontSize: 12}}>Significant</p><p style={{margin: 0, fontSize: 12}}>Transactions</p></div></Link>
                                     <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle3 === true || navLinkHover3 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
                                 </div>
-
+                            </Grid>
+                            <Grid item container xs={3}>
+                                <div onMouseEnter={() => setNavLinkHover4(true)} onMouseLeave={() => setNavLinkHover4(false)} className={classes.NavLinkDiv}>
+                                    <Link className={currentPage === 3 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#contact`} onClick={() => navLinkClick(3)}>Contact </Link>
+                                    <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle4 === true || navLinkHover4 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
+                                </div>
                             </Grid>
                         </Grid>
                     </Grid>

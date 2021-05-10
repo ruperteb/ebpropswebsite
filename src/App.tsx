@@ -14,6 +14,7 @@ import { navigationSlice } from './redux/slices/navigationSlice';
 import Navigation from "../src/components/navigation/navigation"
 import Home from "../src/components/home/home"
 import About from "../src/components/about/about"
+import Significant from "../src/components/significant/significant"
 import Contact from "../src/components/contact/contact"
 
 
@@ -26,10 +27,6 @@ function App() {
 
   const dispatch = useAppDispatch()
 
- React.useEffect(()=> {
-window.scrollTo(0,0)
-
- },[])
 
  type ComponentHeights = {
    navigation: number
@@ -64,6 +61,7 @@ window.scrollTo(0,0)
           <About /* currentPage={props.currentPage} */>
 
           </About>
+          <Significant></Significant>
           <Contact></Contact>
           
           
