@@ -101,18 +101,6 @@ export const Contact: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     }, [])
 
-
-
-    const mapContainer = useRef<any>(null);
-    /* const map = useRef<any>(null); */
-    const [lng, setLng] = useState(18.456395487102565);
-    const [lat, setLat] = useState(-33.97304626926719);
-    const [zoom, setZoom] = useState(15);
-
-
-
-    console.log(contactComponentInView)
-
     const EBLogoMarker = () => {
 
         const smallLogoVariants = {
@@ -122,23 +110,16 @@ export const Contact: React.FC<Props> = ({ /* exampleProp, */ }) => {
         return (
             <motion.img
                 animate={{ scale: 0.15, opacity: 1, y: 0 }}
-                /* variants={smallLogoVariants} */
                 transition={{ duration: 1 }} style={{ opacity: 0, scale: 0.15, y: "-20%" }} className={classes.smallLogo} src={SmallLogoCircle}></motion.img>
         )
     }
 
     const markerNode = document.createElement('div');
 
-
-
     mapboxgl.accessToken = "pk.eyJ1IjoicnVwZXJ0ZWIiLCJhIjoiY2twMTVmbTlhMG1xdjJubnZzaGhzazg5NyJ9.z2JuLFrv8x1JxH53M68DDA"
 
-
-
-
-
-
     const map = useRef<any>(null);
+    const mapContainer = useRef<any>(null);
     const marker = useRef<any>(null);
 
     useEffect(() => {
