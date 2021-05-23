@@ -22,8 +22,8 @@ import {
 } from "framer-motion";
 
 import { useInView } from 'react-intersection-observer';
-
-import mapboxgl, { Map } from 'mapbox-gl'
+// @ts-ignore
+import mapboxgl, { Map } from '!mapbox-gl' // eslint-disable-line import/no-webpack-loader-syntax
 
 import SmallLogoCircle from "../../assets/Small-Logo-Circle.png"
 
