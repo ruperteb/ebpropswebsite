@@ -57,6 +57,12 @@ export const navigationSlice = createSlice({
         setAboutHeight: (state, action: PayloadAction<number>) => {
             state.aboutHeight = action.payload; 
         },
+        setSignificantHeight: (state, action: PayloadAction<number>) => {
+            state.aboutHeight = action.payload; 
+        },
+        setContactHeight: (state, action: PayloadAction<number>) => {
+            state.aboutHeight = action.payload; 
+        },
         
     },
     // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -92,6 +98,9 @@ export const selectAboutHeight = (state: RootState) => state.navigation.aboutHei
 
 export const selectAboutBottom = (state: RootState) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight ;
 
+export const selectSignificantHeight = (state: RootState) => state.navigation.significantHeight;
+
+export const selectContactHeight = (state: RootState) => state.navigation.contactHeight;
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
 /* export const incrementIfOdd = (amount: number): AppThunk => (

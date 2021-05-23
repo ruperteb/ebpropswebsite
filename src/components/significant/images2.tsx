@@ -1,4 +1,4 @@
-import Roggebaai from "../../assets/significant/156Roggebaai.jpg"
+import Halyard from "../../assets/significant/Halyard.jpg"
 import AtterburyHouse from "../../assets/significant/AtterburyHouse.jpg"
 import BlackheathLand from "../../assets/significant/BlackheathLand.jpg"
 import BlackRiverPark from "../../assets/significant/BlackRiverPark.jpg"
@@ -16,6 +16,6 @@ import Witfontein from "../../assets/significant/Witfontein.jpg"
 
 
 export const images = [
-    Roggebaai, AtterburyHouse, BlackheathLand, BlackRiverPark, BRP_NorthPark, CapeQuarter, ConventionTower, DreyersdalFarm, NewMediaHouse, OldMatchFactory, OsbornePark, PleinPark, SouthernCrossHospital, StGeorgesMall, Witfontein
+    Halyard, AtterburyHouse, BlackheathLand, BlackRiverPark, BRP_NorthPark, CapeQuarter, ConventionTower, DreyersdalFarm, NewMediaHouse, OldMatchFactory, OsbornePark, PleinPark, SouthernCrossHospital, StGeorgesMall, Witfontein
     
 ]

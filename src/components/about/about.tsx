@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
     verticalLineContainer: {
         "&:first-child": {
-            "z-index": 1
+            "z-index": 0
         }
     },
     verticalLine: {
@@ -133,31 +133,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const initialBottomDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight)
 
-
     const dispatch = useAppDispatch()
-
-    const aboutRef = React.createRef<HTMLDivElement>()
-
-    React.useEffect(() => {
-
-        if (aboutRef.current)
-
-            dispatch(navigationSlice.actions.setAboutHeight(aboutRef.current?.getBoundingClientRect().height))
-
-    }, [])
-
-
-    const classes = useStyles();
-
-    const bottomRef = React.createRef<HTMLDivElement>()
-
-
-    const [bottomDistance, setBottomDistance] = React.useState<number>()
-
-
-    React.useEffect(() => {
-        setBottomDistance(bottomRef.current?.getBoundingClientRect().y)
-    }, [bottomRef])
 
     const [aboutComponentRef, aboutComponentInView, aboutComponentEntry] = useInView({
         /* Optional options */
@@ -174,6 +150,45 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
         }
 
     }, [aboutComponentInView])
+
+    const aboutRef = React.createRef<HTMLDivElement>()
+
+    const aboutRefHeight = aboutRef.current?.getBoundingClientRect().height
+
+    
+
+    const [rerender, setRerender] = React.useState(false); // or any state
+    const [afterRender, setAfterRender] = React.useState(false);// internal state
+
+    // (1)
+    React.useEffect(() => {
+        if (!afterRender) return;
+        if (aboutRef.current)
+            dispatch(navigationSlice.actions.setAboutHeight(aboutRef.current?.getBoundingClientRect().height))
+        setAfterRender(false);
+    }, [afterRender]);
+
+    React.useEffect(() => {
+        setAfterRender(true); // (1) will be called after DOM rendered
+    }, []); // or don't set any if you want to listen to all re-render events
+
+    /* return {
+        setRerender, // expose function trigger re-render data
+    } */
+
+
+
+    const classes = useStyles();
+
+    const bottomRef = React.createRef<HTMLDivElement>()
+
+    const [bottomDistance, setBottomDistance] = React.useState<number>()
+
+    React.useEffect(() => {
+        setBottomDistance(bottomRef.current?.getBoundingClientRect().y)
+    }, [bottomRef])
+
+
 
     const [historyRef, historyInView, historyEntry] = useInView({
         /* Optional options */
@@ -212,9 +227,9 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
     }
 
     const leftPanelTextVariants = {
-        selected: { color: "#ffffff"  },
+        selected: { color: "#ffffff" },
         unselected: { color: "#ccaa66" },
-        
+
     }
 
     const [recentInView, setRecentInView] = React.useState("history")

@@ -140,6 +140,10 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const aboutScrollDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight)
 
+    const significantScrollDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight)
+
+    const contactScrollDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight + state.navigation.significantHeight)
+
     const dispatch = useAppDispatch()
 
     const classes = useStyles();
@@ -154,13 +158,13 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     React.useEffect(() => {
 
-        if(navigationRef.current)
+        if (navigationRef.current)
 
-        dispatch(navigationSlice.actions.setNavigationHeight(navigationRef.current?.getBoundingClientRect().height))
+            dispatch(navigationSlice.actions.setNavigationHeight(navigationRef.current?.getBoundingClientRect().height))
 
     }, [])
 
-   
+
 
 
     React.useEffect(() => {
@@ -227,23 +231,31 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
         }
     }, [currentPage])
 
-const navLinkClick = (page:number) => {
+    const navLinkClick = (page: number) => {
 
-    dispatch(navigationSlice.actions.setCurrentPage(page))
+        dispatch(navigationSlice.actions.setCurrentPage(page))
 
-    switch(page) {
-        case 0:
-            window.scrollTo({ behavior: 'smooth', top: 0 })
-          break;
-        case 1:
-            window.scrollTo({ behavior: 'smooth', top: aboutScrollDistance -200 })
-          break;
-        default:
-            window.scrollTo({ behavior: 'smooth', top: 0 })
-      }
+        switch (page) {
+            case 0:
+                window.scrollTo({ behavior: 'smooth', top: 0 })
+                break;
+            case 1:
+                window.scrollTo({ behavior: 'smooth', top: aboutScrollDistance - 200 })
+                break;
+            case 2:
+                window.scrollTo({ behavior: 'smooth', top: significantScrollDistance - 300 })
+                
+                
+                break;
+            case 3:
+                window.scrollTo({ behavior: 'smooth', top: contactScrollDistance  })
+                break;
+            default:
+                window.scrollTo({ behavior: 'smooth', top: 0 })
+        }
 
 
-}
+    }
 
 
 
@@ -277,7 +289,7 @@ const navLinkClick = (page:number) => {
                             </Grid>
                             <Grid item container xs={3}>
                                 <div onMouseEnter={() => setNavLinkHover3(true)} onMouseLeave={() => setNavLinkHover3(false)} className={classes.NavLinkDiv}>
-                                    <Link className={currentPage === 2 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#significant_transactions`} onClick={() => navLinkClick(2)}><div><p style={{margin: 0, fontSize: 12}}>Significant</p><p style={{margin: 0, fontSize: 12}}>Transactions</p></div></Link>
+                                    <Link className={currentPage === 2 ? `${classes.NavLink} ${classes.NavLinkHover}` : classes.NavLink} to={`/#significant_transactions`} onClick={() => navLinkClick(2)}><div><p style={{ margin: 0, fontSize: 12 }}>Significant</p><p style={{ margin: 0, fontSize: 12 }}>Transactions</p></div></Link>
                                     <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle3 === true || navLinkHover3 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
                                 </div>
                             </Grid>
