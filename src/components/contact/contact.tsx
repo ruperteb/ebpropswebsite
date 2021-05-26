@@ -30,6 +30,9 @@ import SmallLogoCircle from "../../assets/Small-Logo-Circle.png"
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { navigationSlice } from '../../redux/slices/navigationSlice';
 
+import PhoneAndroidTwoToneIcon from '@material-ui/icons/PhoneAndroidTwoTone';
+import EmailTwoToneIcon from '@material-ui/icons/EmailTwoTone';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,19 +47,65 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         padding: 0,
-        /* width: '100vw',
-        maxWidth: "100vw" */
-        /*  backgroundColor: "#1f304a" */
+        maxWidth: "100vw",
+        height: "calc(100vh - 80px)",
+        marginTop: 100
     },
     mapContainer: {
-        height: 400,
-        width: 600
-
+        display: "flex",
+        height: "60vh",
+        width: "40vw",
+        marginRight: "auto",
+        marginLeft: "auto",
     },
     smallLogo: {
 
-    }
+    },
+    contactMainHeading: {
+        display: "flex",
+        color: "#ccaa66",
+        margin: 10,
+        marginTop: 0,
+        fontSize: "3em",
+        textShadow: "2px 2px 2px #000000",
+    },
+    contactMainHeadingDiv: {
+        width: "fit-content",
+        display: "flex",
+        color: "#ccaa66",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: 50,
+        marginBottom: 50,
+        border: "5px solid #ccaa66",
 
+        
+    },
+    contactHeading: {
+        display: "flex",
+        color: "#ccaa66",
+        marginBottom: 10,
+        textShadow: "2px 2px 2px #000000",
+    },
+    contactText: {
+        display: "flex",
+        color: "white",
+        marginLeft: 20,
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    icon: {
+        marginTop: "auto",
+        marginBottom: "auto",
+        marginRight: "20px",
+    },
+    link: {
+        color: "#ccaa66",
+        textDecoration: "none",
+        "&:hover": {
+            color: 'white'
+        }
+    }
 
 }));
 
@@ -97,7 +146,7 @@ export const Contact: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
         if (contactRef.current)
 
-            dispatch(navigationSlice.actions.setSignificantHeight(contactRef.current?.getBoundingClientRect().height))
+            dispatch(navigationSlice.actions.setContactHeight(contactRef.current?.getBoundingClientRect().height))
 
     }, [])
 
@@ -146,7 +195,44 @@ export const Contact: React.FC<Props> = ({ /* exampleProp, */ }) => {
     return (
         <div ref={contactComponentRef} className={classes.outerDiv}>
             <Container ref={contactRef} maxWidth='lg' className={classes.container} id="#contact">
-                <div ref={mapContainer} className={classes.mapContainer}></div>
+                <Grid container>
+                    <Grid container xs={12} item>
+                        <div className={classes.contactMainHeadingDiv}>
+                            <h1 className={classes.contactMainHeading}>Contact Us</h1>
+                        </div>
+                        
+                    </Grid>
+                    <Grid container xs={6} item>
+                        <Grid container xs={4} item></Grid>
+                        <Grid container xs={8} item direction={'column'}>
+                            <h1 className={classes.contactHeading} style={{marginTop: 0}}>General Enquiries</h1>
+                            <p className={classes.contactText}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 4555 183">021 686 3160</a></p>
+                            <p className={classes.contactText}><EmailTwoToneIcon className={classes.icon}></EmailTwoToneIcon> <a className={classes.link} href="mailto:sean@ellisbrown.co.za">info@ellisbrown.co.za</a></p>
+                        </Grid>
+                        <Grid container xs={4} item></Grid>
+                        <Grid container xs={8} item direction={'column'}>
+                            <h1 className={classes.contactHeading}>Sean Ellis Brown</h1>
+                            <p className={classes.contactText}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 4555 183">082 4555 183</a></p>
+                            <p className={classes.contactText}><EmailTwoToneIcon className={classes.icon}></EmailTwoToneIcon> <a className={classes.link} href="mailto:sean@ellisbrown.co.za">sean@ellisbrown.co.za</a></p>
+                        </Grid>
+                        <Grid container xs={4} item></Grid>
+                        <Grid container xs={8} item direction={'column'}>
+                            <h1 className={classes.contactHeading}>Mark Ellis Brown</h1>
+                            <p className={classes.contactText}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 449 7316">082 449 7316</a></p>
+                            <p className={classes.contactText}><EmailTwoToneIcon className={classes.icon}></EmailTwoToneIcon> <a className={classes.link} href="mailto:mark@ellisbrown.co.za">mark@ellisbrown.co.za</a></p>
+                        </Grid>
+
+                    </Grid>
+                    <Grid container xs={6} item>
+                        <Grid container xs={10} item>
+                        <div ref={mapContainer} className={classes.mapContainer}></div>
+                        </Grid>
+                        <Grid container xs={2} item></Grid>
+                    </Grid>
+
+
+                </Grid>
+
 
             </Container>
         </div>

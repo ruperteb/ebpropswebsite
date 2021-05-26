@@ -58,10 +58,10 @@ export const navigationSlice = createSlice({
             state.aboutHeight = action.payload; 
         },
         setSignificantHeight: (state, action: PayloadAction<number>) => {
-            state.aboutHeight = action.payload; 
+            state.significantHeight = action.payload; 
         },
         setContactHeight: (state, action: PayloadAction<number>) => {
-            state.aboutHeight = action.payload; 
+            state.contactHeight = action.payload; 
         },
         
     },

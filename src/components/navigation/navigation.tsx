@@ -144,6 +144,20 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const contactScrollDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight + state.navigation.significantHeight)
 
+/* console.log(contactScrollDistance,significantScrollDistance ) */
+
+/* const homeHeight = useAppSelector((state) => state.navigation.homeHeight)
+const aboutHeight = useAppSelector((state) => state.navigation.aboutHeight)
+const significantHeight = useAppSelector((state) => state.navigation.significantHeight)
+const contactHeight = useAppSelector((state) => state.navigation.contactHeight)
+
+console.log({
+    "home": homeHeight,
+    "about": aboutHeight,
+    "significant": significantHeight,
+    "contact": contactHeight,
+}) */
+
     const dispatch = useAppDispatch()
 
     const classes = useStyles();
@@ -243,7 +257,7 @@ export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
                 window.scrollTo({ behavior: 'smooth', top: aboutScrollDistance - 200 })
                 break;
             case 2:
-                window.scrollTo({ behavior: 'smooth', top: significantScrollDistance - 300 })
+                window.scrollTo({ behavior: 'smooth', top: significantScrollDistance - 250 })
                 
                 
                 break;
