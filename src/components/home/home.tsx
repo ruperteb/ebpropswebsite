@@ -136,7 +136,7 @@ export const Home: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const { scrollY } = useViewportScroll();
     const y1 = useTransform(scrollY, [0, 400], [0, 100]);
-    const y2 = useTransform(scrollY, [0, 400], [0, -100]);
+    const y2 = useTransform(scrollY, [0, 400], [0, -50]);
 
 
     const variants = {

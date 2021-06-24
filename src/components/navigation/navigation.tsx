@@ -23,6 +23,7 @@ import {
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { navigationSlice } from '../../redux/slices/navigationSlice';
+import { Position } from '@cloudinary/base/qualifiers/position';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -166,7 +167,7 @@ console.log({
 
     /* const [scroll, setScroll] = React.useState(0); */
 
-    const [isTop, setIsTop] = React.useState(false);
+    const [isTop, setIsTop] = React.useState(true);
 
     const navigationRef = React.createRef<HTMLDivElement>()
 
@@ -198,7 +199,6 @@ console.log({
         if (isTop === true) {
             return 0
         } else return -200
-
     }
 
     const getHeaderLeft = () => {
@@ -275,7 +275,7 @@ console.log({
 
     return (
 
-        <motion.div ref={navigationRef} layout style={{ top: getHeaderTop(), left: 0, position: "fixed", zIndex: 1, width: "100%" }} >
+        <motion.div ref={navigationRef} layout={"position"} style={{ top: getHeaderTop(), left: 0, position: "fixed", zIndex: 1, width: "100%" }} >
             <div className={classes.LogoDiv}>
                 <img className={classes.Logo} src={BannerLogo} alt="EllisBrownPropertiesLogo"></img>
 
@@ -290,7 +290,7 @@ console.log({
                             <Grid item container xs={3}>
                                 <div onMouseEnter={() => setNavLinkHover1(true)} onMouseLeave={() => setNavLinkHover1(false)} className={classes.NavLinkDiv}>
                                     <Link className={currentPage === 0 ? `${classes.NavLink} ${classes.NavLinkHover} ` : classes.NavLink} to={`/#home`} onClick={() => navLinkClick(0)}>Home </Link>
-                                    <motion.div className={classes.NavLinkUnderline} transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle1 === true || navLinkHover1 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
+                                    <motion.div className={classes.NavLinkUnderline} layout transition={{ duration: 0.4, ease: "easeInOut" }} animate={navLinkToggle1 === true || navLinkHover1 === true ? { opacity: 1, width: "100%", backgroundColor: "#e2d8d8d5" } : { opacity: 0, width: "0%", backgroundColor: "#e2d8d8d5" }}></motion.div>
                                 </div>
 
 
@@ -319,7 +319,7 @@ console.log({
                 </Grid>
             </div>
 
-            <motion.div layout style={{ top: 200, left: getHeaderLeft(), position: "absolute", zIndex: 1 }} >
+            <motion.div layout={"position"} style={{ top: 200, left: getHeaderLeft(), position: "absolute", zIndex: 1 }} >
 
                 <img className={classes.SmallLogo} src={BannerLogo} alt="EllisBrownPropertiesLogo2"></img>
 
