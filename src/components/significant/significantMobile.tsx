@@ -117,7 +117,7 @@ export const SignificantMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
         if (significantRef.current)
 
-            dispatch(navigationSlice.actions.setSignificantHeight(significantRef.current?.getBoundingClientRect().height))
+            dispatch(navigationSlice.actions.setSignificantHeightMobile(significantRef.current?.getBoundingClientRect().height))
 
     }, [])
 

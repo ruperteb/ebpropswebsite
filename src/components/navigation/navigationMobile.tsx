@@ -169,12 +169,12 @@ export const NavigationMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
                 window.scrollTo({ behavior: 'smooth', top: aboutScrollDistance - 0 })
                 break;
             case 2:
-                window.scrollTo({ behavior: 'smooth', top: significantScrollDistance - 0 })
+                window.scrollTo({ behavior: 'smooth', top: significantScrollDistance - 125 })
 
 
                 break;
             case 3:
-                window.scrollTo({ behavior: 'smooth', top: contactScrollDistance })
+                window.scrollTo({ behavior: 'smooth', top: contactScrollDistance - 50 })
                 break;
             default:
                 window.scrollTo({ behavior: 'smooth', top: 0 })

@@ -173,7 +173,7 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     }, [aboutComponentInView])
 
-    const aboutRef = React.createRef<HTMLDivElement>()
+    const aboutMobileRef = React.createRef<HTMLDivElement>()
     const historyLinkRef = React.createRef<HTMLDivElement>()
     const agentsLinkRef = React.createRef<HTMLDivElement>()
     const servicesLinkRef = React.createRef<HTMLDivElement>()
@@ -194,7 +194,7 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
     }
         , [])
 
-    const aboutRefHeight = aboutRef.current?.getBoundingClientRect().height
+    const aboutRefHeight = aboutMobileRef.current?.getBoundingClientRect().height
 
 
 
@@ -204,8 +204,8 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
     // (1)
     React.useEffect(() => {
         /* if (!afterRender) return; */
-        if (aboutRef.current)
-            dispatch(navigationSlice.actions.setAboutHeight(aboutRef.current?.getBoundingClientRect().height))
+        if (aboutMobileRef.current)
+            dispatch(navigationSlice.actions.setAboutHeightMobile(aboutMobileRef.current?.getBoundingClientRect().height))
         /*  setAfterRender(false); */
     }, [/* afterRender */]);
 
@@ -346,7 +346,7 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
 
     return (
-        <div ref={aboutRef} className={classes.outerDiv}>
+        <div ref={aboutMobileRef} className={classes.outerDiv}>
             <Container ref={aboutComponentRef} maxWidth='lg' className={classes.container} id="#about">
                 <div id="topPanel" className={classes.stickyTopPanel} /* style={getLeftPanelStyles()} */ /* layout={"position"} transition={{ ease: "easeOut", duration: 0.2 }} */>
                     <Grid container item >

@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 50
     },
     mapContainer: {
-        marginTop: 50,
+       /*  marginTop: 50, */
         display: "flex",
         height: "50vh",
         width: "100vw",
@@ -65,8 +65,8 @@ const useStyles = makeStyles((theme) => ({
         /*   zIndex: -20 */
     },
     smallLogo: {
-       /*  height: 500,
-        width: 500, */
+        /*  height: 500,
+         width: 500, */
     },
     contactMainHeading: {
         display: "flex",
@@ -147,13 +147,13 @@ export const ContactMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     }, [contactComponentInView])
 
-    const contactRef = React.createRef<HTMLDivElement>()
+    const contactRefMobile = React.createRef<HTMLDivElement>()
 
     React.useEffect(() => {
 
-        if (contactRef.current)
+        if (contactRefMobile.current)
 
-            dispatch(navigationSlice.actions.setContactHeight(contactRef.current?.getBoundingClientRect().height))
+            dispatch(navigationSlice.actions.setContactHeightMobile(contactRefMobile.current?.getBoundingClientRect().height))
 
     }, [])
 
@@ -170,21 +170,21 @@ export const ContactMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
         )
     }
 
-    var markerNode = document.createElement('div');
-    markerNode.className = 'marker';
+    var markerNodeMobile = document.createElement('div');
+    markerNodeMobile.className = 'marker';
 
     mapboxgl.accessToken = "pk.eyJ1IjoicnVwZXJ0ZWIiLCJhIjoiY2twMTVmbTlhMG1xdjJubnZzaGhzazg5NyJ9.z2JuLFrv8x1JxH53M68DDA"
 
-    const map = useRef<any>(null);
-    const mapContainer = useRef<any>(null);
-    const marker = useRef<any>(null);
+    const mapMobile = useRef<any>(null);
+    const mapContainerMobile = useRef<any>(null);
+    const markerMobile = useRef<any>(null);
 
-    console.log(mapContainer.current)
+    console.log(mapContainerMobile.current)
 
     useEffect(() => {
-        if (mapContainer.current) {
-            map.current = new Map({
-                container: mapContainer.current,
+        if (mapContainerMobile.current) {
+            mapMobile.current = new Map({
+                container: mapContainerMobile.current,
                 center: [18.456395487102565, -33.97304626926719],
                 zoom: 15,
                 style: 'mapbox://styles/mapbox/streets-v11',
@@ -193,26 +193,26 @@ export const ContactMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
     }, [])
 
     useEffect(() => {
-        if (marker.current)
-            marker.current.remove()
+        if (markerMobile.current)
+            markerMobile.current.remove()
         if (contactComponentInView == true)
-            marker.current = new mapboxgl.Marker(/* markerNode */).setLngLat([18.456395487102565, -33.97304626926719]).addTo(map.current)
-        ReactDOM.render(EBLogoMarker(), markerNode);
+            markerMobile.current = new mapboxgl.Marker(/* markerNodeMobile */).setLngLat([18.456395487102565, -33.97304626926719]).addTo(mapMobile.current)
+        ReactDOM.render(EBLogoMarker(), markerNodeMobile);
 
     }, [contactComponentInView])
 
 
     return (
         <div ref={contactComponentRef} className={classes.outerDiv}>
-            <Container ref={contactRef} maxWidth='lg' className={classes.container} id="#contact">
-                <Grid container>
-                    <Grid container xs={12} >
+            <Container ref={contactRefMobile} maxWidth='lg' className={classes.container} id="#contact">
+                <Grid container >
+                    <Grid container xs={12}  >
                         <div className={classes.contactMainHeadingDiv}>
                             <h1 className={classes.contactMainHeading}>Contact Us</h1>
                         </div>
 
                     </Grid>
-                    <Grid container xs={12} >
+                    <Grid container xs={12} style={{backgroundColor: "#1f304a", zIndex: 30, paddingBottom: 50 }}  >
 
                         <Grid container xs={12} alignItems="center" direction={'column'}>
                             <div>
@@ -239,16 +239,17 @@ export const ContactMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
                         </Grid>
 
                     </Grid>
-                    <Grid container xs={12} >
-
-                    </Grid>
 
 
+
+                </Grid>
+                <Grid container xs={12} >
+                    <div id="mapContainer" ref={mapContainerMobile} className={classes.mapContainer}></div>
                 </Grid>
 
 
             </Container>
-            <div id="mapContainer" ref={mapContainer} className={classes.mapContainer}></div>
+
         </div>
 
     );
