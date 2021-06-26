@@ -29,8 +29,6 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { navigationSlice } from '../../redux/slices/navigationSlice';
 import { AndroidTwoTone } from '@material-ui/icons';
 
-import { StickyContainer, Sticky } from 'react-sticky';
-
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -335,8 +333,6 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     return (
         <div ref={aboutRef} className={classes.outerDiv}>
-            <StickyContainer>
-
                 <Container ref={aboutComponentRef} maxWidth='lg' className={classes.container} id="#about">
                     <Grid container spacing={1} style={{ marginLeft: "auto", marginRight: "auto" }}>
                         <Grid container item xs={2} >
@@ -465,7 +461,6 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
                     </Grid>
                 </Container>
                 <div /* ref={bottomRef} */></div>
-            </StickyContainer>
         </div>
 
 

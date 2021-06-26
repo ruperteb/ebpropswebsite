@@ -6,24 +6,43 @@ import { current } from '@reduxjs/toolkit'
 export interface NavigationState {
     currentPage: number;
     currentPageURL: string
+
     scrollY: number;
+    scrollYMobile: number;
+
     navigationHeight: number;
     homeHeight: number;
     aboutHeight: number;
     significantHeight: number;
     contactHeight: number;
-   
+
+    navigationHeightMobile: number;
+    homeHeightMobile: number;
+    aboutHeightMobile: number;
+    significantHeightMobile: number;
+    contactHeightMobile: number;
+ 
 }
 
 const initialState: NavigationState = {
     currentPage: 0,
     currentPageURL: "#home",
+
     scrollY: 0,
+    scrollYMobile: 0,
+
     navigationHeight: 0,
     homeHeight: 0,
     aboutHeight: 0,
     significantHeight: 0,
     contactHeight: 0,
+
+    navigationHeightMobile: 0,
+    homeHeightMobile: 0,
+    aboutHeightMobile: 0,
+    significantHeightMobile: 0,
+    contactHeightMobile: 0,
+ 
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -63,6 +82,25 @@ export const navigationSlice = createSlice({
         setContactHeight: (state, action: PayloadAction<number>) => {
             state.contactHeight = action.payload; 
         },
+        setScrollYMobile: (state, action: PayloadAction<number>) => {
+            state.scrollYMobile = action.payload;
+            /* console.log(current(state)) */
+        },
+        setNavigationHeightMobile: (state, action: PayloadAction<number>) => {
+            state.navigationHeightMobile = action.payload; 
+        },
+        setHomeHeightMobile: (state, action: PayloadAction<number>) => {
+            state.homeHeightMobile = action.payload; 
+        },
+        setAboutHeightMobile: (state, action: PayloadAction<number>) => {
+            state.aboutHeightMobile = action.payload; 
+        },
+        setSignificantHeightMobile: (state, action: PayloadAction<number>) => {
+            state.significantHeightMobile = action.payload; 
+        },
+        setContactHeightMobile: (state, action: PayloadAction<number>) => {
+            state.contactHeightMobile = action.payload; 
+        },
         
     },
     // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -79,7 +117,7 @@ export const navigationSlice = createSlice({
     }, */
 });
 
-export const { setCurrentPage, setCurrentPageURL, setScrollY, setNavigationHeight, setHomeHeight, setAboutHeight  } = navigationSlice.actions;
+export const { setCurrentPage, setCurrentPageURL, setScrollY, setNavigationHeight, setHomeHeight, setAboutHeight, setSignificantHeight, setContactHeight, setScrollYMobile, setNavigationHeightMobile, setHomeHeightMobile, setAboutHeightMobile, setSignificantHeightMobile, setContactHeightMobile  } = navigationSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -101,6 +139,20 @@ export const selectAboutBottom = (state: RootState) => state.navigation.navigati
 export const selectSignificantHeight = (state: RootState) => state.navigation.significantHeight;
 
 export const selectContactHeight = (state: RootState) => state.navigation.contactHeight;
+
+export const selectScrollYMobile = (state: RootState) => state.navigation.scrollYMobile;
+
+export const selectNavigationHeightMobile = (state: RootState) => state.navigation.navigationHeightMobile;
+
+export const selectHomeHeightMobile = (state: RootState) => state.navigation.homeHeightMobile;
+
+export const selectAboutHeightMobile = (state: RootState) => state.navigation.aboutHeightMobile;
+
+export const selectAboutBottomMobile = (state: RootState) => state.navigation.navigationHeightMobile + state.navigation.homeHeightMobile + state.navigation.aboutHeightMobile ;
+
+export const selectSignificantHeightMobile = (state: RootState) => state.navigation.significantHeightMobile;
+
+export const selectContactHeightMobile = (state: RootState) => state.navigation.contactHeightMobile;
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
 /* export const incrementIfOdd = (amount: number): AppThunk => (

@@ -11,11 +11,23 @@ import {
 import { useAppSelector, useAppDispatch } from './redux/hooks'
 import './App.css';
 import { navigationSlice } from './redux/slices/navigationSlice';
+
 import Navigation from "../src/components/navigation/navigation"
 import Home from "../src/components/home/home"
 import About from "../src/components/about/about"
 import Significant from "../src/components/significant/significant"
 import Contact from "../src/components/contact/contact"
+
+import NavigationMobile from "../src/components/navigation/navigationMobile"
+import HomeMobile from "../src/components/home/homeMobile"
+import AboutMobile from "../src/components/about/aboutMobile"
+import SignificantMobile from "../src/components/significant/significantMobile"
+import ContactMobile from "../src/components/contact/contactMobile"
+
+
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 
 
 
@@ -28,54 +40,59 @@ function App() {
   const dispatch = useAppDispatch()
 
 
- type ComponentHeights = {
-   navigation: number
-   home: number
-   about: number
-   featured: number
-   contact: number
- }
+  type ComponentHeights = {
+    navigation: number
+    home: number
+    about: number
+    featured: number
+    contact: number
+  }
 
- const [componentHeights, setComponentHeights] = React.useState<ComponentHeights>({
-  navigation: 0,
-  home: 0,
-  about: 0,
-  featured: 0,
-  contact: 0,
-})
+  const [componentHeights, setComponentHeights] = React.useState<ComponentHeights>({
+    navigation: 0,
+    home: 0,
+    about: 0,
+    featured: 0,
+    contact: 0,
+  })
+
+  const matches = useMediaQuery('(min-width:1280px)');
 
 
+  let theme = createMuiTheme();
+  theme = responsiveFontSizes(theme);
 
+  if (matches)
 
-  return (
+    return (
+      <div className="App">
+        <Router>
+          <Redirect to={{ pathname: `/${currentPageURL}`, }} />
+
+          <Navigation></Navigation>
+          <Home></Home>
+          <About></About>
+          <Significant></Significant>
+          <Contact></Contact>
+
+        </Router>
+      </div>
+    );
+
+  else return (
     <div className="App">
       <Router>
         <Redirect to={{ pathname: `/${currentPageURL}`, }} />
-        <Navigation  /* handlePageChange={(number) => handlePageChange(number)} */ ></Navigation>  {/* See https://github.com/facebook/react/issues/18147  for need to use callback*/}
-        {/* <ReactPageScroller pageOnChange={handlePageChange}
-
-
-          customPageNumber={props.currentPage}> */}
-
-          <Home /* currentPage={props.currentPage} scrollDirection={props.scrollDirection} */></Home>
-          <About /* currentPage={props.currentPage} */>
-
-          </About>
-          <Significant></Significant>
-          <Contact></Contact>
-          
-          
-
-       {/*  </ReactPageScroller> */}
-
-        <div id='container' className="appcontainer">
-
-
-
-        </div>
+        <ThemeProvider theme={theme}>
+          <NavigationMobile></NavigationMobile>
+          <HomeMobile></HomeMobile>
+          <AboutMobile></AboutMobile>
+          <SignificantMobile></SignificantMobile>
+          <ContactMobile></ContactMobile>
+        </ThemeProvider>
       </Router>
     </div>
-  );
+  )
 }
 
 export default App;
