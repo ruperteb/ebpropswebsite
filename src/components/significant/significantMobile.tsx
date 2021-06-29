@@ -87,9 +87,9 @@ interface Props {
 
 export const SignificantMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
-    const currentPage = useAppSelector((state) => state.navigation.currentPage)
+    /* const currentPage = useAppSelector((state) => state.navigation.currentPage)
     const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
-    const scrollY = useAppSelector((state) => state.navigation.scrollY)
+    const scrollY = useAppSelector((state) => state.navigation.scrollY) */
 
     const dispatch = useAppDispatch()
 
@@ -132,8 +132,8 @@ export const SignificantMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
         visible: { opacity: 1, },
     }
 
-    const [activeSlide, setActiveSlide] = React.useState(0)
-    const [activeSlide2, setActiveSlide2] = React.useState(0)
+    /* const [activeSlide, setActiveSlide] = React.useState(0)
+    const [activeSlide2, setActiveSlide2] = React.useState(0) */
 
 
 
@@ -142,26 +142,20 @@ export const SignificantMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
     return (
         <div ref={significantComponentRef} className={classes.outerDiv}>
             <Container ref={significantRef} maxWidth='lg' className={classes.container} id="#significant">
-
                 <motion.div
                     className={classes.headingTextDiv}
                     animate={significantComponentInView ? "visible" : "hidden"}
                     variants={significantHeadingTextVariants}
                     transition={{ duration: 1 }}>
-
                     <Grid container direction="row" wrap="wrap" >
                         <Typography align="center" variant="h4" className={classes.headingText}><em style={{ fontWeight: 600, marginLeft: "auto", color: "#ccaa66", fontStyle: "normal", whiteSpace: "nowrap" }}>Significant Transactions</em> concluded by <em style={{ fontWeight: 600, marginLeft: "auto", color: "#ccaa66", fontStyle: "normal", whiteSpace: "nowrap" }}>Ellis Brown Properties </em>include:</Typography>
                     </Grid>
-
-
                 </motion.div>
-
                 <motion.div
                     className={classes.imageSliderDiv}
                     animate={significantComponentInView ? "visible" : "hidden"}
                     variants={imageSliderVariants}
                     transition={{ duration: 1 }}>
-
 
                     <Swiper
                         spaceBetween={50}
@@ -171,42 +165,27 @@ export const SignificantMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
                         navigation
                         pagination={{ clickable: true }}
                         /* scrollbar={{ draggable: true }} */
-                        onSwiper={(swiper) => console.log(swiper)}
-                        onSlideChange={() => console.log('slide change')}
+                        /* onSwiper={(swiper) => console.log(swiper)} */
+                        /* onSlideChange={() => console.log('slide change')} */
                         className="mySwiper"
                     >
 
                         {imagesArray.map((image, index) => {
                             return (
-                                <SwiperSlide>
+                                <SwiperSlide key={index} >
                                     <motion.div
                                         whileHover={{ scale: 1.025 }}
                                         whileTap={{ scale: 0.975 }}
                                         style={{ cursor: "grabbing" }}>
-                                        <ImageSliderMobile index={index + 1} key={index} imageData={image}></ImageSliderMobile>
+                                        <ImageSliderMobile index={index + 1} imageData={image}></ImageSliderMobile>
                                     </motion.div>
                                 </SwiperSlide>
-
                             )
-
                         })}
 
-
                     </Swiper>
-
-
-
                 </motion.div>
-
-
-
-
             </Container>
-
-
-
-
-
         </div>
 
     );

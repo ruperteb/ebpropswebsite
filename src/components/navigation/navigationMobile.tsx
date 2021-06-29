@@ -127,8 +127,8 @@ export const NavigationMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
     });
 
     const currentPage = useAppSelector((state) => state.navigation.currentPage)
-    const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
-    const scrollY = useAppSelector((state) => state.navigation.scrollYMobile)
+    /* const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
+    const scrollY = useAppSelector((state) => state.navigation.scrollYMobile) */
 
     const aboutScrollDistance = useAppSelector((state) => state.navigation.navigationHeightMobile + state.navigation.homeHeightMobile)
 
@@ -210,7 +210,7 @@ export const NavigationMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
         >
             <Grid container style={{ height: "6em", }}>
                 {/* <Grid item xs={2}></Grid> */}
-                <Grid style={{ marginLeft: "0.5em", marginRight: "0.5em", }} container xs={12}>
+                <Grid style={{ marginLeft: "0.5em", marginRight: "0.5em", }} item container xs={12}>
                     {/* <Grid item xs={1}></Grid> */}
                     <Grid style={{display: "flex"}} item xs={2}>
                         <div className={currentPage === 0 ? `${classes.NavLinkDiv} ${classes.NavLinkDivSelected} ` : classes.NavLinkDiv}>
@@ -254,7 +254,7 @@ export const NavigationMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
         <div ref={navigationMobileRef} className={classes.navContainer}>
            
             <Grid container>
-                <Grid container xs={2}>
+                <Grid item xs={2}>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -266,10 +266,10 @@ export const NavigationMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
                     </IconButton>
 
                 </Grid>
-                <Grid container xs={8}>
+                <Grid item xs={8}>
                     <img className={classes.SmallLogo} src={BannerLogo} alt="EllisBrownPropertiesLogo"></img>
                 </Grid>
-                <Grid container xs={2}></Grid>
+                <Grid item xs={2}></Grid>
             </Grid>
             {([/* 'left', 'right',  */'top'/* , 'bottom' */] as Anchor[]).map((anchor) => (
                 <React.Fragment key={anchor}>

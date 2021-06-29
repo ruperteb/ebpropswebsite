@@ -149,11 +149,11 @@ interface Props {
 
 export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
-    const currentPage = useAppSelector((state) => state.navigation.currentPage)
+    /* const currentPage = useAppSelector((state) => state.navigation.currentPage)
     const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
     const scrollY = useAppSelector((state) => state.navigation.scrollY)
 
-    const initialBottomDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight)
+    const initialBottomDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight) */
 
     const dispatch = useAppDispatch()
 
@@ -226,14 +226,6 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
 
     const classes = useStyles();
-
-    /* const bottomRef = React.createRef<HTMLDivElement>() */
-
-    /* const [bottomDistance, setBottomDistance] = React.useState<number>() */
-
-    /* React.useEffect(() => {
-        setBottomDistance(bottomRef.current?.getBoundingClientRect().y)
-    }, [bottomRef]) */
 
 
 
@@ -327,23 +319,6 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
         }
     }
 
-    console.log(linkHeights?.history)
-
-
-    /* const getLeftPanelStyles: any = () => {
-        if (bottomDistance) {
-            if (bottomDistance <= 735) {
-                return { position: "absolute", top: initialBottomDistance! - 735, width: "calc((1288px*16.666667/100) - 8px)", flexBasis: "16.666667%", }
-            } else {
-                if (scrollY >= window.innerHeight) {
-                    return { position: "fixed", top: 236, width: "calc((1288px*16.666667/100) - 8px)", flexBasis: "16.666667%", }
-                } else return { position: "static", top: 236, width: "100%", marginBottom: "auto" }
-            }
-        } else return { position: "static", top: 236, width: "100%", marginBottom: "auto" }
-
-
-    } */
-
 
     return (
         <div ref={aboutMobileRef} className={classes.outerDiv}>
@@ -353,7 +328,7 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
                         <Grid item container xs={12} className={classes.horizontalLineContainer}>
                             <div className={classes.horizontalLineBackground}></div>
                         </Grid>
-                        <Grid container xs={12}>
+                        <Grid container> 
                             <Grid item xs={4}>
                                 <motion.h1 className={classes.topPanelItem} animate={recentInView === "history" ? "selected" : "unselected"} variants={leftPanelTextVariants} transition={{ duration: 0.6 }} onClick={() => aboutPanelLinkClick("history")}>History</motion.h1>
                             </Grid>
@@ -395,7 +370,7 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                                 <img className={classes.agentImage} src={Sean} alt="Sea Ellis Brown"></img>
                                             </div>
                                         </Grid>
-                                        <Grid alignItems="center" xs={8} direction="column" container>
+                                        <Grid alignItems="center" xs={8} direction="column" item container>
                                             <Typography variant="h4" className={classes.textName}>Sean Ellis Brown</Typography>
                                             <div>
                                                 <Typography align="left" variant="body1" className={classes.textMain}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 4555 183">082 4555 183</a></Typography>
@@ -419,7 +394,7 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                                 <img className={classes.agentImage} src={Mark} alt="Mark Ellis Brown"></img>
                                             </div>
                                         </Grid>
-                                        <Grid alignItems="center" xs={8} direction="column" container>
+                                        <Grid alignItems="center" xs={8} direction="column" item container>
                                             <Typography variant="h4" className={classes.textName}>Mark Ellis Brown</Typography>
                                             <div>
                                                 <Typography align="left" variant="body1" className={classes.textMain}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 449 7316">082 449 7316</a></Typography>
@@ -441,13 +416,13 @@ export const AboutMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                 <Grid container direction="row">
                                     <Grid xs={1} item>
                                     </Grid>
-                                    <Grid xs={10} alignItems="center" item style={{marginBottom: "2em"}}>
+                                    <Grid xs={10} alignItems="center" item container style={{marginBottom: "2em"}}>
                                         <Typography align="center" variant="h4" className={classes.textName}>Our expertise covers:</Typography>
                                     </Grid>
                                     <Grid xs={1} item>
                                     </Grid>
                                     <Grid xs={12} container item>
-                                        <Grid xs={12} direction="row" container>
+                                        <Grid xs={12} direction="row" container item>
                                             <motion.p style={{textAlign: "center"}} className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.5 }}>•&nbsp; Commercial leasing and sales</motion.p>
                                             <motion.p style={{textAlign: "center"}} className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.6 }}>•&nbsp; Industrial leasing and sales</motion.p>
                                             <motion.p style={{textAlign: "center"}} className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.7 }}>•&nbsp; Investment sales</motion.p>

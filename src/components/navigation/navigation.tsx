@@ -78,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
     NavDiv: {
         "background-color": "#ca6",
         width: "100%",
+        boxShadow: "-1px 1px 3px 2px #0000003d",
     },
     NavBarTranslated: {
         height: "40px",
@@ -136,7 +137,7 @@ interface Props {
 export const Navigation: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
     const currentPage = useAppSelector((state) => state.navigation.currentPage)
-    const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
+    /* const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL) */
     const scrollY = useAppSelector((state) => state.navigation.scrollY)
 
     const aboutScrollDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight)

@@ -135,12 +135,12 @@ interface Props {
 
 export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
-    const currentPage = useAppSelector((state) => state.navigation.currentPage)
+/*     const currentPage = useAppSelector((state) => state.navigation.currentPage)
     const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
     const scrollY = useAppSelector((state) => state.navigation.scrollY)
 
     const initialBottomDistance = useAppSelector((state) => state.navigation.navigationHeight + state.navigation.homeHeight + state.navigation.aboutHeight)
-
+ */
     const dispatch = useAppDispatch()
 
     const [aboutComponentRef, aboutComponentInView, aboutComponentEntry] = useInView({
@@ -180,7 +180,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
     }
         , [])
 
-    const aboutRefHeight = aboutRef.current?.getBoundingClientRect().height
+    /* const aboutRefHeight = aboutRef.current?.getBoundingClientRect().height */
 
 
 
@@ -212,14 +212,6 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
 
     const classes = useStyles();
-
-    /* const bottomRef = React.createRef<HTMLDivElement>() */
-
-    /* const [bottomDistance, setBottomDistance] = React.useState<number>() */
-
-    /* React.useEffect(() => {
-        setBottomDistance(bottomRef.current?.getBoundingClientRect().y)
-    }, [bottomRef]) */
 
 
 
@@ -313,24 +305,6 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
         }
     }
 
-    console.log(linkHeights?.history)
-
-
-    /* const getLeftPanelStyles: any = () => {
-        if (bottomDistance) {
-            if (bottomDistance <= 735) {
-                return { position: "absolute", top: initialBottomDistance! - 735, width: "calc((1288px*16.666667/100) - 8px)", flexBasis: "16.666667%", }
-            } else {
-                if (scrollY >= window.innerHeight) {
-                    return { position: "fixed", top: 236, width: "calc((1288px*16.666667/100) - 8px)", flexBasis: "16.666667%", }
-                } else return { position: "static", top: 236, width: "100%", marginBottom: "auto" }
-            }
-        } else return { position: "static", top: 236, width: "100%", marginBottom: "auto" }
-
-
-    } */
-
-
     return (
         <div ref={aboutRef} className={classes.outerDiv}>
                 <Container ref={aboutComponentRef} maxWidth='lg' className={classes.container} id="#about">
@@ -341,7 +315,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
                             <div id="leftPanel" className={classes.stickyLeftPanel} /* style={getLeftPanelStyles()} */ /* layout={"position"} transition={{ ease: "easeOut", duration: 0.2 }} */>
                                 <Grid container item >
-                                    <Grid item container xs={3} className={classes.verticalLineContainer}>
+                                    <Grid item xs={3} className={classes.verticalLineContainer}>
                                         <motion.div className={classes.verticalLine}
                                             layout
                                             animate={getLineVariant()}
@@ -384,7 +358,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                                 </div>
 
                                             </Grid>
-                                            <Grid xs={8} direction="column" item>
+                                            <Grid xs={8} container direction="column" item>
                                                 <p className={classes.textName}>Sean Ellis Brown</p>
                                                 <p className={classes.textMain}>Sean holds a Bachelor of Business Science honours degree from the University of Cape Town. He is actively involved in all sectors of the market with a focus on land and investment sales, as well as office and industrial letting.</p>
                                                 <p className={classes.textMain}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 4555 183">082 4555 183</a></p>
@@ -408,7 +382,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                                 </div>
 
                                             </Grid>
-                                            <Grid xs={8} direction="column" item>
+                                            <Grid xs={8} container direction="column" item>
                                                 <p className={classes.textName}>Mark Ellis Brown</p>
                                                 <p className={classes.textMain}>Mark has over 25 years experience in the Cape Town commercial and industrial property market with a focus on office letting, site selection and the facilitation of new developments.</p>
                                                 <p className={classes.textMain}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 449 7316">082 449 7316</a></p>
@@ -434,7 +408,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                         <Grid xs={3} container item>
                                         </Grid>
                                         <Grid xs={6} container item>
-                                            <Grid xs={12} direction="column" item>
+                                            <Grid xs={12} container direction="column" item>
                                                 <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.5 }}>• Commercial leasing and sales</motion.p>
                                                 <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.7 }}>• Industrial leasing and sales</motion.p>
                                                 <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.9 }}>• Investment sales</motion.p>
@@ -443,7 +417,7 @@ export const About: React.FC<Props> = ({ /* exampleProp, */ }) => {
                                             </Grid>
                                         </Grid>
                                         <Grid xs={5} container item>
-                                            <Grid xs={12} direction="column" item>
+                                            <Grid xs={12} container direction="column" item>
                                                 <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.6 }}>• Facilitating new developments</motion.p>
                                                 <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 0.8 }}>• Site selection and evaluation</motion.p>
                                                 <motion.p className={classes.textMain} variants={servicesItemVariants} transition={{ duration: 0.7, delay: 1 }}>• Sale & lease-back negotiations</motion.p>

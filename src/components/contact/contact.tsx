@@ -32,6 +32,7 @@ import { navigationSlice } from '../../redux/slices/navigationSlice';
 
 import PhoneAndroidTwoToneIcon from '@material-ui/icons/PhoneAndroidTwoTone';
 import EmailTwoToneIcon from '@material-ui/icons/EmailTwoTone';
+import { Typography } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,15 +49,14 @@ const useStyles = makeStyles((theme) => ({
     container: {
         padding: 0,
         maxWidth: "100vw",
-        height: "calc(100vh - 80px)",
+        height: "calc(100vh - 165px)",
         marginTop: 100
     },
     mapContainer: {
         display: "flex",
-        height: "60vh",
+        height: "55vh",
         width: "40vw",
-        marginRight: "auto",
-        marginLeft: "auto",
+        margin: "auto"
     },
     smallLogo: {
 
@@ -75,11 +75,11 @@ const useStyles = makeStyles((theme) => ({
         color: "#ccaa66",
         marginLeft: "auto",
         marginRight: "auto",
-        marginTop: 50,
-        marginBottom: 50,
+        marginTop: "2em",
+        marginBottom: "2em",
         border: "5px solid #ccaa66",
 
-        
+
     },
     contactHeading: {
         display: "flex",
@@ -105,6 +105,16 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
             color: 'white'
         }
+    },
+    footer : {
+        maxWidth: "100vw",
+        height: 80,
+        backgroundColor: "#ccaa66",
+        boxShadow: "-1px -1px 3px 2px #0000003d",
+    },
+    footerText: {
+        color: "#ffffff",
+        textShadow: "1px 1px 2px black",
     }
 
 }));
@@ -200,23 +210,23 @@ export const Contact: React.FC<Props> = ({ /* exampleProp, */ }) => {
                         <div className={classes.contactMainHeadingDiv}>
                             <h1 className={classes.contactMainHeading}>Contact Us</h1>
                         </div>
-                        
+
                     </Grid>
                     <Grid container xs={6} item>
-                        <Grid container xs={4} item></Grid>
-                        <Grid container xs={8} item direction={'column'}>
-                            <h1 className={classes.contactHeading} style={{marginTop: 0}}>General Enquiries</h1>
+                        <Grid container xs={5} item></Grid>
+                        <Grid container xs={7} item direction={'column'}>
+                            <h1 className={classes.contactHeading} style={{ marginTop: 0 }}>General Enquiries</h1>
                             <p className={classes.contactText}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 4555 183">021 686 3160</a></p>
                             <p className={classes.contactText}><EmailTwoToneIcon className={classes.icon}></EmailTwoToneIcon> <a className={classes.link} href="mailto:sean@ellisbrown.co.za">info@ellisbrown.co.za</a></p>
                         </Grid>
-                        <Grid container xs={4} item></Grid>
-                        <Grid container xs={8} item direction={'column'}>
+                        <Grid container xs={5} item></Grid>
+                        <Grid container xs={7} item direction={'column'}>
                             <h1 className={classes.contactHeading}>Sean Ellis Brown</h1>
                             <p className={classes.contactText}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 4555 183">082 4555 183</a></p>
                             <p className={classes.contactText}><EmailTwoToneIcon className={classes.icon}></EmailTwoToneIcon> <a className={classes.link} href="mailto:sean@ellisbrown.co.za">sean@ellisbrown.co.za</a></p>
                         </Grid>
-                        <Grid container xs={4} item></Grid>
-                        <Grid container xs={8} item direction={'column'}>
+                        <Grid container xs={5} item></Grid>
+                        <Grid container xs={7} item direction={'column'}>
                             <h1 className={classes.contactHeading}>Mark Ellis Brown</h1>
                             <p className={classes.contactText}><PhoneAndroidTwoToneIcon className={classes.icon}></PhoneAndroidTwoToneIcon> <a className={classes.link} href="tel:082 449 7316">082 449 7316</a></p>
                             <p className={classes.contactText}><EmailTwoToneIcon className={classes.icon}></EmailTwoToneIcon> <a className={classes.link} href="mailto:mark@ellisbrown.co.za">mark@ellisbrown.co.za</a></p>
@@ -224,16 +234,22 @@ export const Contact: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
                     </Grid>
                     <Grid container xs={6} item>
-                        <Grid container xs={10} item>
-                        <div ref={mapContainer} className={classes.mapContainer}></div>
+                        <Grid container xs={8} item>
+                            <div ref={mapContainer} className={classes.mapContainer}></div>
                         </Grid>
-                        <Grid container xs={2} item></Grid>
+                        <Grid container xs={4} item></Grid>
                     </Grid>
-
-
                 </Grid>
-
-
+            </Container>
+            <Container className={classes.footer}>
+                <Grid style={{padding: "1em"}} container>
+                    <Grid item xs={12} >
+                        <Typography className={classes.footerText}>Ellis Brown Properties (Pty) Ltd ▪ Reg No. 1997/002190/07 ▪ Directors: MR Ellis Brown, SM Ellis Brown</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography className={classes.footerText}>4 Apple Lane, Newlands, Cape Town, 7700</Typography>
+                    </Grid>
+                </Grid>
             </Container>
         </div>
 

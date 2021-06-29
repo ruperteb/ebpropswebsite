@@ -101,8 +101,8 @@ interface Props {
 
 export const HomeMobile: React.FC<Props> = ({ /* exampleProp, */ }) => {
 
-    const currentPage = useAppSelector((state) => state.navigation.currentPage)
-    const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL)
+    /* const currentPage = useAppSelector((state) => state.navigation.currentPage)
+    const currentPageURL = useAppSelector((state) => state.navigation.currentPageURL) */
     /* const scrollY = useAppSelector((state) => state.navigation.scrollY) */
 
     const dispatch = useAppDispatch()
